@@ -56,26 +56,25 @@ Vite плагин для предотвращения блокировки ре�
 
 ```html
 <head>
-    <!-- Preload теги - загружают стили параллельно -->
+    <!-- Preload тег перед каждым стилем -->
     <link
         rel="preload"
         href="https://fonts.googleapis.com/css2?family=Roboto"
         as="style"
         onload="this.onload=null;this.rel='stylesheet'"
     />
-    <link
-        rel="preload"
-        href="/main.css"
-        as="style"
-        onload="this.onload=null;this.rel='stylesheet'"
-    />
-
-    <!-- Оригинальные стили с отложенным применением -->
     <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Roboto"
         media="print"
         onload="this.media='all'"
+    />
+
+    <link
+        rel="preload"
+        href="/main.css"
+        as="style"
+        onload="this.onload=null;this.rel='stylesheet'"
     />
     <link
         rel="stylesheet"

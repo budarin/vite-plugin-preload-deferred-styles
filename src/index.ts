@@ -8,47 +8,10 @@ export interface PreloadDeferredStylesOptions {
 }
 
 /**
- * Находит все стили в HTML и создает для них preload теги
+ * Создает preload тег для одного стиля
  */
-function findStyles(
-    html: string,
-    options: PreloadDeferredStylesOptions
-): string[] {
-    const {} = options;
-
-    // Создаем регулярное выражение для поиска link тегов со стилями
-    const linkRegex = /<link[^>]*rel\s*=\s*["']stylesheet["'][^>]*>/gi;
-    const styles: string[] = [];
-
-    let match;
-    while ((match = linkRegex.exec(html)) !== null) {
-        const linkTag = match[0];
-
-        // Проверяем, что это внешний стиль (имеет href)
-        const hrefMatch = linkTag.match(/href\s*=\s*["']([^"']+)["']/i);
-        if (!hrefMatch) continue;
-
-        const href = hrefMatch[1];
-
-        // Исключаем инлайн стили (якорные ссылки)
-        if (href.startsWith('#')) continue;
-
-        styles.push(href);
-    }
-
-    return styles;
-}
-
-/**
- * Создает preload теги для стилей
- */
-function createPreloadTags(styles: string[]): string {
-    return styles
-        .map(
-            (href) =>
-                `<link rel="preload" href="${href}" as="style" onload="this.onload=null;this.rel='stylesheet'">`
-        )
-        .join('\n');
+function createPreloadTag(href: string): string {
+    return `<link rel="preload" href="${href}" as="style" onload="this.onload=null;this.rel='stylesheet'">`;
 }
 
 /**
@@ -100,7 +63,9 @@ function modifyOriginalStyles(
                 );
             }
 
-            return modifiedMatch;
+            // Создаем preload тег и вставляем его перед модифицированным стилем
+            const preloadTag = createPreloadTag(href);
+            return preloadTag + '\n' + modifiedMatch;
         }
     );
 }
@@ -124,41 +89,8 @@ export function preloadDeferredStyles(
                 );
             }
 
-            // Находим все стили (кроме инлайн)
-            const styles = findStyles(html, pluginOptions);
-
-            if (debug) {
-                console.log(
-                    '[vite-plugin-preload-deferred-styles] Found styles:',
-                    styles
-                );
-            }
-
-            if (styles.length === 0) {
-                return html;
-            }
-
-            // Создаем preload теги
-            const preloadTags = createPreloadTags(styles);
-
-            // Модифицируем оригинальные стили
-            let modifiedHtml = modifyOriginalStyles(html, pluginOptions);
-
-            // Добавляем preload теги в head
-            if (modifiedHtml.includes('<head>')) {
-                modifiedHtml = modifiedHtml.replace(
-                    /<head>/i,
-                    `<head>\n${preloadTags}`
-                );
-            } else if (modifiedHtml.includes('<html>')) {
-                modifiedHtml = modifiedHtml.replace(
-                    /<html[^>]*>/i,
-                    `$&\n<head>\n${preloadTags}\n</head>`
-                );
-            } else {
-                // Если нет head, добавляем в начало документа
-                modifiedHtml = `<head>\n${preloadTags}\n</head>\n${modifiedHtml}`;
-            }
+            // Модифицируем оригинальные стили и добавляем preload теги перед ними
+            const modifiedHtml = modifyOriginalStyles(html, pluginOptions);
 
             if (debug) {
                 console.log(
