@@ -1,17 +1,17 @@
 {
-  "name": "@budarin/vite-plugin-preload-deferred-styles",
-  "version": "1.0.0",
-  "description": "Vite plugin to preload styles and defer their application after page load",
-  "keywords": [
-    "vite",
-    "plugin",
-    "preload",
-    "deferred",
-    "styles"
-  ],
-  "author": "Budarin Sergey",
-  "license": "MIT",
-  "main": "dist/index.js",
+    "name": "@budarin/vite-plugin-preload-deferred-styles",
+    "version": "1.0.1",
+    "description": "Vite plugin to preload styles and defer their application after page load",
+    "keywords": [
+        "vite",
+        "plugin",
+        "preload",
+        "deferred",
+        "styles"
+    ],
+    "author": "Budarin Sergey",
+    "license": "MIT",
+    "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "dist/index.d.ts",
     "type": "module",

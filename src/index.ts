@@ -30,7 +30,7 @@ function findStyles(
 
         const href = hrefMatch[1];
 
-        // Исключаем только инлайн стили (якорные ссылки)
+        // Исключаем инлайн стили (якорные ссылки)
         if (href.startsWith('#')) continue;
 
         styles.push(href);
