@@ -8,7 +8,7 @@ export interface PreloadDeferredStylesOptions {
  * Создает preload тег для одного стиля
  */
 function createPreloadTag(href: string): string {
-    return `<link rel="preload" href="${href}" as="style" crossorigin onload="this.onload=null;this.rel='stylesheet'">`;
+    return `<link rel="preload" href="${href}" as="style" crossorigin >`;
 }
 
 /**
