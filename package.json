@@ -1,6 +1,6 @@
 {
     "name": "@budarin/vite-plugin-preload-deferred-styles",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Vite plugin to preload styles and defer their application after page load",
     "keywords": [
         "vite",
