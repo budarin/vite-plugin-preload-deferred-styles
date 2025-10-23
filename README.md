@@ -62,7 +62,7 @@ Vite плагин для предотвращения блокировки ре�
         rel="preload"
         href="https://fonts.googleapis.com/css2?family=Roboto"
         as="style"
-        onload="this.onload=null;this.rel='stylesheet'"
+        crossorigin
     />
     <link
         rel="stylesheet"
@@ -71,12 +71,7 @@ Vite плагин для предотвращения блокировки ре�
         onload="this.media='all'"
     />
 
-    <link
-        rel="preload"
-        href="/main.css"
-        as="style"
-        onload="this.onload=null;this.rel='stylesheet'"
-    />
+    <link rel="preload" href="/main.css" as="style" crossorigin />
     <link
         rel="stylesheet"
         href="/main.css"
@@ -85,6 +80,10 @@ Vite плагин для предотвращения блокировки ре�
     />
 </head>
 <body>
+    <style>
+        /* инлайн стили */
+    </style>
+
     <h1>Важная информация</h1>
     <!-- ВИДНА СРАЗУ! -->
 </body>
